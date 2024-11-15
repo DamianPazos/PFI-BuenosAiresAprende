@@ -1,20 +1,24 @@
 # Registro de producto
-# TODO: Excepciones
 def registro(almacenamiento):
-    nombre = input('Ingrese el nombre del producto: ')
-    precio = float(input('Ingrese el precio del producto: $'))
-    stock = int(input('Ingrese la cantidad de stock del producto: '))
-    
-    producto_final = {
-        'nombre': nombre,
-        'precio' : precio,
-        'stock': stock,
-    }
-    almacenamiento.append(producto_final)
+    try:        
+        nombre = input('Ingrese el nombre del producto: ')
+        precio = float(input('Ingrese el precio del producto: $'))
+        stock = int(input('Ingrese la cantidad de stock del producto: '))
+
+        producto_final = {
+            'nombre': nombre,
+            'precio' : precio,
+            'stock': stock,
+        }
+        almacenamiento.append(producto_final)
+    except:
+        print('Ingresaste un valor no valido, reintentalo nuevamente')
+        registro(almacenamiento)    
 
 # Modificacion de un producto
 # TODO: Opcion salir
 # TODO: Expeciones
+'''
 def modificar(producto, almacenamiento):
     for producto_modificar in almacenamiento:
         if producto_modificar == producto:
@@ -27,15 +31,19 @@ def modificar(producto, almacenamiento):
                 clave = 'stock'
             new_valor = input('Ingrese el nuevo valor')
             producto_modificar[clave] = new_valor
-
+'''
 
 # Busqueda de producto
 def buscar(almacenamiento):
-    valor = input('¿Que producto desea buscar?\n')
-    for producto in almacenamiento:
-        if producto['nombre'] == valor:
-            return producto
-    return None
+    try:
+        valor = input('¿Que producto desea buscar?\n')
+        for producto in almacenamiento:
+            if producto['nombre'] == valor:
+                return producto
+        return None
+    except:
+        print('Ingreso un valor invalido, reintentelo nuevamente')
+        buscar(almacenamiento)
 
 # Eliminar producto
 def eliminar(producto, almacenamiento):
@@ -50,7 +58,7 @@ def enlistar(almacenamiento):
 
 # Muestra menu principal
 def mostrar_menu_principal ():
-    print('MENU DE OPCIONES\n\n')
+    print('\n\nMENU DE OPCIONES\n\n')
     print('1. Registrar producto\n2. Mostrar productos\n3. Eliminar producto\n4. Salir del programa\n\n')
 
 '''
