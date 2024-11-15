@@ -49,10 +49,11 @@ def buscar(almacenamiento):
 def eliminar(producto, almacenamiento):
     almacenamiento.remove(producto)
 
+# Enlista los productos
 def enlistar(almacenamiento):
     contador = 1
     for producto in almacenamiento:
-        print(f'Producto N°{contador}\n{producto}')
+        print(f"Producto N°{contador}\nNombre: {producto['nombre']}\nPrecio: ${producto['precio']}\nStock: {producto['stock']}\n")
         contador = contador + 1
 
 
