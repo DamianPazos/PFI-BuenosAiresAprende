@@ -1,5 +1,6 @@
-import menu
+import functions as func
 
 productos = []
 
-menu.mostrar_menu(productos)
+while True:
+    func.mostrar_menu()
