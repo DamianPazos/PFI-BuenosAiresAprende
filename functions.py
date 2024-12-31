@@ -1,27 +1,25 @@
 import sqlite3
+from colorama import Fore
 
 # Registro de producto
 def registro(almacenamiento):
     try:        
-        nombre = input('Ingrese el nombre del producto: ')
-        descripcion = input('Ingrese la descripción del producto: ')
-        precio = float(input('Ingrese el precio del producto: $'))
-        stock = int(input('Ingrese la cantidad de stock del producto: '))
-        categoria = input('Ingrese la categoria del producto: ')
+        nombre = input(Fore.CYAN + 'Ingrese el nombre del producto: ')
+        descripcion = input(Fore.WHITE + 'Ingrese la descripción del producto: ')
+        precio = float(input(Fore.CYAN + 'Ingrese el precio del producto: $'))
+        stock = int(input(Fore.WHITE + 'Ingrese la cantidad de stock del producto: '))
+        categoria = input(Fore.CYAN + 'Ingrese la categoria del producto: ')
         almacenamiento.execute('''
             INSERT INTO productos (nombre, descripcion, cantidad, precio, categoria)
             VALUES (?, ?, ?, ?, ?)
             ''', (nombre, descripcion, stock, precio, categoria))
         almacenamiento.commit()
+        print("Se registro correctamente")
     except ValueError:
-        print('Ingresaste un valor no valido, reintentalo nuevamente')
+        print(Fore.RED + 'Ingresaste un valor no valido, reintentalo nuevamente')
         registro(almacenamiento)
     except sqlite3.Error as e:
-        print("Hubo un error en el registro del producto: {e}")  
-
-# Modificacion de un producto
-# TODO: Opcion salir
-# TODO: Expeciones
+        print(Fore.RED + "Hubo un error en el registro del producto: {e}")  
 
 def modificar_cantidad(cursor, almacenamiento):
     try:
@@ -32,11 +30,12 @@ def modificar_cantidad(cursor, almacenamiento):
                         WHERE id = ?
                         ''',(valor, producto_modificado,))
         almacenamiento.commit()
+        print("Se modifico correctamente")
     except ValueError:
-        print('Ingreso un valor invalido, reintentelo nuevamente')
+        print(Fore.RED + 'Ingreso un valor invalido, reintentelo nuevamente')
         modificar_cantidad(cursor, almacenamiento)
     except sqlite3.Error as e:
-        print(f"Hubo un error en la modificacion del producto: {e}")
+        print(Fore.RED + f"Hubo un error en la modificacion del producto: {e}")
 
 # Busqueda de producto (ID)
 def buscar(cursor):
@@ -48,10 +47,10 @@ def buscar(cursor):
                         ''', (valor,))
         return cursor.fetchall()
     except ValueError:
-        print('Ingreso un valor invalido, reintentelo nuevamente')
+        print(Fore.RED + 'Ingreso un valor invalido, reintentelo nuevamente')
         buscar(cursor)
     except sqlite3.Error as e:
-        print(f"Hubo un error en la busqueda del producto: {e}")
+        print(Fore.RED + f"Hubo un error en la busqueda del producto: {e}")
 
 # Eliminar producto
 def eliminar(cursor, almacenamiento):
@@ -62,11 +61,12 @@ def eliminar(cursor, almacenamiento):
                         WHERE id = ?
                         ''', (valor,))
         almacenamiento.commit()
+        print("Se elimino correctamente")
     except ValueError:
-        print('Ingreso un valor invalido, reintentelo nuevamente')
+        print(Fore.RED + 'Ingreso un valor invalido, reintentelo nuevamente')
         eliminar(cursor, almacenamiento)
     except sqlite3.Error as e:
-        print(f"Hubo un error en la eliminacion del producto: {e}")
+        print(Fore.RED + f"Hubo un error en la eliminacion del producto: {e}")
 
 # Enlista los productos
 def enlistar(cursor):
@@ -76,16 +76,16 @@ def enlistar(cursor):
                         ''')
         return cursor.fetchall()
     except ValueError:
-        print('Ingreso un valor invalido, reintentelo nuevamente')
+        print(Fore.RED + 'Ingreso un valor invalido, reintentelo nuevamente')
         enlistar(cursor)
     except sqlite3.Error as e:
-        print(f"Hubo un error en la muestra de los productos: {e}")
+        print(Fore.RED + f"Hubo un error en la muestra de los productos: {e}")
 
 
 # Muestra menu principal
 def mostrar_menu_principal ():
-    print('\n\nMENU DE OPCIONES\n\n')
-    print('1. Registrar producto\n2. Buscar producto\n3. Eliminar producto\n4. Enlistar productos\n5. Modificar producto\n6. Reporte de bajo stock\n7. Salir del programa\n\n')
+    print(Fore.CYAN + '\n\nMENU DE OPCIONES\n\n')
+    print(Fore.WHITE + '1. Registrar producto\n2. Buscar producto\n3. Eliminar producto\n4. Enlistar productos\n5. Modificar producto\n6. Reporte de bajo stock\n7. Salir del programa\n\n')
 
 # Conexion y/o creacion de base de datos
 def conectar_base(nombre):       
@@ -93,7 +93,7 @@ def conectar_base(nombre):
         conexion = sqlite3.connect(nombre)
         return conexion
     except sqlite3.Error as e:
-        print(f"Error con la conexion en la base de datos: {e}")
+        print(Fore.RED + f"Error con la conexion en la base de datos: {e}")
         return None
     
 # Creacion de cursor para base de datos

@@ -1,4 +1,8 @@
 import functions as func
+from colorama import Fore, Style
+
+# Reset Colorama
+print(Style.RESET_ALL)
 
 # Base de datos
 base_datos = "inventario.db"
@@ -6,8 +10,8 @@ tabla = "productos"
 conexion_bd = func.conectar_base(base_datos)
 cursor_bd = func.crear_cursor(conexion_bd)
 if not func.existe_tabla(tabla, conexion_bd):
-    conexion_bd.execute('''
-            CREATE TABLE IF NOT EXISTS ? (
+    conexion_bd.execute(f'''
+            CREATE TABLE IF NOT EXISTS {tabla} (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             nombre TEXT NOT NULL,
             descripcion TEXT,
@@ -15,7 +19,7 @@ if not func.existe_tabla(tabla, conexion_bd):
             precio REAL NOT NULL,
             categoria TEXT
             )
-            ''', (tabla))
+            ''',)
     func.guardar_cambios(conexion_bd)
 
 while True:
@@ -23,7 +27,7 @@ while True:
     func.mostrar_menu_principal()
     
     try:
-        opcion_menu_principal = int(input('Ingrese el número de opción: '))
+        opcion_menu_principal = int(input(Fore.CYAN + 'Ingrese el número de opción: '))
         if opcion_menu_principal == 1:
             func.registro(conexion_bd)
         elif opcion_menu_principal == 2:
